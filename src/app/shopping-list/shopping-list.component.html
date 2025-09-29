@@ -2,17 +2,40 @@
   <div class="col-xs-10">
     <app-shopping-edit></app-shopping-edit>
     <hr />
+
     <ul class="list-group">
       <a
-        class="list-group-item"
-        style="cursor: pointer"
-        *ngFor="let ingredient of ingredients"
+        *ngFor="let ingredient of recipeIngredients"
+        class="list-group-item cursor-pointer"
       >
-        {{ formatQuantity(ingredient.quantity) }} {{ ingredient.name }}
-        <span *ngIf="ingredient.preparation">{{ ingredient.preparation }}</span>
-        <span *ngIf="ingredient.alternatives?.length">
-          oder {{ ingredient.alternatives.join(" / ") }}
-        </span>
+        <!-- inner grid controls alignment -->
+        <div
+          class="d-flex align-items-baseline"
+        >
+          <!-- QTY: number only -->
+          <span class="text-end me-3">
+            {{ qtyValue(ingredient) }}
+          </span>
+
+          <!-- Unit -->
+          <span class="text-right">
+            {{ unitValue(ingredient) }}
+          </span>
+
+          <!-- Name -->
+          <span class="bg-red-500 w-16 h-16">
+            <!-- whitespace-nowrap overflow-hidden text-ellipsis -->
+            {{ ingredient.name }}
+            <ng-container *ngIf="ingredient.alternatives?.length">
+              &nbsp;oder {{ ingredient.alternatives.join(" / ") }}
+            </ng-container>
+          </span>
+
+          <!-- Preparation -->
+          <span class="text-gray-600">
+            {{ ingredient.preparation }}
+          </span>
+        </div>
       </a>
     </ul>
   </div>
