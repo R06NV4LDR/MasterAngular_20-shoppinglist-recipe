@@ -1,0 +1,15 @@
+/* quantity = right aligned, fixed width measured in '0' characters */
+.qty-col {
+  display: inline-block;
+  width: 6ch;                     /* room for up to 6 digits; tweak as needed */
+  text-align: right;
+  font-family: Menlo, "Courier New", Courier, monospace; /* true mono */
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1; /* hard-enable tabular/lining */
+  letter-spacing: 0;
+}
+
+/* unit, name, prep columns */
+.unit-col { display:inline-block; width: 5ch; text-align:center; }
+.name-col { display:inline-block; width: 28ch; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.prep-col { display:inline-block; width: calc(100% - 6ch - 5ch - 28ch - 2rem); } /* remaining width, adjust -2rem if you change spacing */

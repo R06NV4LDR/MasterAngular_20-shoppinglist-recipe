@@ -1,54 +1,60 @@
 import { Component, OnInit } from "@angular/core";
-import { Ingredient, IngredientRole, Quantity, Unit } from "../shared/ingredient.model";
+import { Ingredient, IngredientRole, Quantity, RecipeIngredient, Unit } from "../shared/ingredient.model";
 
 @Component({
   selector: "app-shopping-list",
   templateUrl: "./shopping-list.component.html",
-  styleUrl: "./shopping-list.component.css",
+  styleUrls: ["./shopping-list.component.css"],
 })
 export class ShoppingListComponent implements OnInit {
-  ingredients: Ingredient[] = [
+
+ingredients: Ingredient[] = [
+
+]
+
+  recipeIngredients: RecipeIngredient[] = [
     {
-      name: "Südtiroler Speck g.g.A.",
-      quantity: { kind: "exact", value: 50, unit: "g" },
+      ingredientId: "ing_bacon",
+      name: "Südtiroler Speck",
+      quantity: { kind: "exact", value: 100, unit: "g" },
       preparation: "in Würfel geschnitten",
       section: "Knödel", // optional
     },
-    {
-      name: "Weissbrot für Knödelteig",
-      quantity: { kind: "exact", value: 100, unit: "g" },
+    {ingredientId: "ing_bread",
+      name: "Weissbrot",
+      quantity: { kind: "exact", value: 200, unit: "g" },
       preparation: "in Würfel geschnitten",
       section: "Knödel",
     },
-    {
+    {ingredientId: "ing_flour",
       name: "Mehl",
-      quantity: { kind: "exact", value: 20, unit: "g" },
+      quantity: { kind: "exact", value: 40, unit: "g" },
       section: "Knödel",
     },
-    {
+    {ingredientId: "ing_onion",
       name: "geschmorte Zwiebeln",
-      quantity: { kind: "exact", value: 25, unit: "g" },
+      quantity: { kind: "exact", value: 50, unit: "g" },
       section: "Knödel",
     },
-    {
+    {ingredientId: "ing_chives",
       name: "Schnittlauch",
-      quantity: { kind: "exact", value: 0.5, unit: "EL" }, // ½ EL
+      quantity: { kind: "exact", value: 1, unit: "EL" }, // ½ EL
       alternatives: ["Petersilie"],
       preparation: "fein geschnitten",
       section: "Knödel",
     },
-    {
+    {ingredientId: "ing_egg",
       name: "Eier",
-      quantity: { kind: "range", min: 1, max: 2, unit: "Stk" },
+      quantity: { kind: "exact", value: 3, unit: "Stk" },
       section: "Knödel",
     },
-    {
+    {ingredientId: "ing_milk",
       name: "Milch",
       quantity: { kind: "unspecified" }, // amount not given
       role: "toTaste",
       section: "Knödel",
     },
-    {
+    {ingredientId: "ing_salt",
       name: "Salz",
       quantity: { kind: "toTaste", unit: "Prise" },
       role: "toTaste",
@@ -75,4 +81,32 @@ export class ShoppingListComponent implements OnInit {
         return "";
     }
   }
+
+  qtyValue(line: RecipeIngredient): string {
+  const q = line.quantity;
+  if (!q) return '';
+  switch (q.kind) {
+    case 'exact':  return String(q.value);                    // e.g. 100
+    case 'count':  return String(q.value);                    // e.g. 3
+    case 'range':  return `${q.min}–${q.max}`;                // e.g. 1–2
+    case 'unspecified':
+    case 'toTaste':
+      return '–';                                            // keep column occupied
+  }
+}
+
+unitValue(line: RecipeIngredient): string {
+  const q = line.quantity;
+  if (!q) return '';
+  // show unit only when it makes sense
+  switch (q.kind) {
+    case 'exact':
+    case 'count':
+    case 'range':
+      return q.unit ?? '';
+    case 'unspecified':
+    case 'toTaste':
+      return '';                                             // no unit
+  }
+}
 }
