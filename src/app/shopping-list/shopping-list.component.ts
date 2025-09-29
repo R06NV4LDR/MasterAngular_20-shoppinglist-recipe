@@ -91,7 +91,7 @@ ingredients: Ingredient[] = [
     case 'range':  return `${q.min}–${q.max}`;                // e.g. 1–2
     case 'unspecified':
     case 'toTaste':
-      return '–';                                            // keep column occupied
+      return 'etwas';                                            // keep column occupied
   }
 }
 

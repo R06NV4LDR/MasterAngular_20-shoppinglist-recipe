@@ -1,34 +1,16 @@
 <ul class="list-group">
-  <a *ngFor="let ingredient of recipeIngredients"
-     class="list-group-item cursor-pointer">
-    <div class="d-flex align-items-baseline">
-      <!-- Quantity -->
-      <span class="text-end me-3"
-            style="display: inline-block;
-                   width: 100px;
-                   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-                   font-variant-numeric: tabular-nums;">
-        {{ qtyValue(ingredient) || '–' }}
-      </span>
-
-      <!-- Unit -->
-      <span class="text-center me-3" style="display:inline-block; width: 70px;">
-        {{ unitValue(ingredient) }}
-      </span>
-
-      <!-- Name -->
-      <span class="text-truncate me-3 flex-shrink-0"
-            style="display:inline-block; width: 260px;">
+  <a *ngFor="let ingredient of recipeIngredients" class="list-group-item">
+    <!-- was: d-flex align-items-baseline -->
+    <div class="d-flex align-items-center" style="gap: 1rem;">
+      <span class="qty-col">{{ qtyValue(ingredient) || '–' }}</span>
+      <span class="unit-col">{{ unitValue(ingredient) }}</span>
+      <span class="name-col">
         {{ ingredient.name }}
         <ng-container *ngIf="ingredient.alternatives?.length">
           &nbsp;oder {{ ingredient.alternatives.join(' / ') }}
         </ng-container>
       </span>
-
-      <!-- Preparation -->
-      <span class="text-muted flex-fill">
-        {{ ingredient.preparation }}
-      </span>
+      <span class="prep-col text-muted">{{ ingredient.preparation }}</span>
     </div>
   </a>
 </ul>
