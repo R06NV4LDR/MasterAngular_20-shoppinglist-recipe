@@ -29,10 +29,21 @@ export interface NutritionFacts {
   salt?: number;
 }
 
+export interface Ingredient {
+  id: string;
+  name: string; // "Schnittlauch", "Mehl", "Eier"
+  category?: string; // "Herbs", "Vegetables"
+  nutritionPer100g?: NutritionFacts;
+  // optional: density g/ml, defaultUnit, brand/product links, etc.
+  //   density?: number;
+  //   defaultUnit?: string;
+  //   brand?: string;
+}
+
 export type IngredientRole = "base" | "optional" | "garnish" | "toTaste";
 
-export interface Ingredient {
-  id?: string;
+export interface RecipeIngredient {
+  ingredientId: string;
   name: string;
   quantity: Quantity;
   preparation?: string;
