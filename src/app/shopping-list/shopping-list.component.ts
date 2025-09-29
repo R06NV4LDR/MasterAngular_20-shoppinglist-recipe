@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Ingredient, Unit } from "../shared/ingredient.model";
+import { Ingredient, IngredientRole, Quantity, Unit } from "../shared/ingredient.model";
 
 @Component({
   selector: "app-shopping-list",
@@ -45,6 +45,7 @@ export class ShoppingListComponent implements OnInit {
     {
       name: "Milch",
       quantity: { kind: "unspecified" }, // amount not given
+      role: "toTaste",
       section: "Knödel",
     },
     {
@@ -57,4 +58,21 @@ export class ShoppingListComponent implements OnInit {
 
   constructor() {}
   ngOnInit(): void {}
+
+  formatQuantity(q: Quantity | undefined, role?: IngredientRole): string {
+    if (!q) return "";
+
+    switch (q.kind) {
+      case "exact":
+        return `${q.value} ${q.unit ?? ""}`.trim();
+      case "range":
+        return `${q.min}–${q.max} ${q.unit ?? ""}`.trim();
+      case "count":
+        return `${q.value} ${q.unit ?? ""}`.trim();
+      case "unspecified":
+        return role === "toTaste" ? "" : "";
+      case "toTaste":
+        return "";
+    }
+  }
 }
