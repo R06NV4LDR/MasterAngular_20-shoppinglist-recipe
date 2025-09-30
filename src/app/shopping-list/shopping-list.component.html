@@ -21,13 +21,15 @@
           <span class="unit-col">{{ unitValue(ingredient) }}</span>
           <span class="name-col">
             {{ ingredient.name }}
-            <ng-container *ngIf="ingredient.alternatives?.length">
-              &nbsp;oder {{ ingredient.alternatives.join(" / ") }}
-            </ng-container>
           </span>
-          <span class="prep-col text-muted">{{ ingredient.preparation }}</span>
         </div>
       </a>
     </ul>
   </div>
 </div>
+
+<!-- BELONG TO RECIPEINGREDIENT -->
+<!-- <ng-container *ngIf="ingredient.alternatives?.length">
+  &nbsp;oder {{ ingredient.alternatives.join(" / ") }}
+</ng-container> -->
+<!-- <span class="prep-col text-muted">{{ ingredient.preparation }}</span> -->
