@@ -5,13 +5,10 @@
 </div>
 <hr />
 <div class="row">
-  
   <div class="col-xs-120">
-  
     <app-recipe-item
       *ngFor="let recipeEl of recipes"
       [recipe]="recipeEl"
-      (recipeSelected)="onRecipeSelected(recipeEl)"
     ></app-recipe-item>
   </div>
 </div>

@@ -1,6 +1,8 @@
+import { EventEmitter } from "@angular/core";
 import { Recipe } from "./recipe.model";
 
 export class RecipeService {
+  recipeSelected = new EventEmitter<Recipe>();
   private recipes: Recipe[] = [
     new Recipe(
       1,
@@ -20,9 +22,9 @@ export class RecipeService {
       "Eine runde Köstlichkeit: der Südtiroler Speckknödel!",
       "https://images.simedia.cloud/cms-v2/CustomerData/496/files/Images/rezepte/speckknoedel_01.jpg/600x0/image.jpg?v=638941401451"
     ),
- ];
+  ];
 
- getRecipes() {
+  getRecipes() {
     return this.recipes.slice();
- }
+  }
 }
