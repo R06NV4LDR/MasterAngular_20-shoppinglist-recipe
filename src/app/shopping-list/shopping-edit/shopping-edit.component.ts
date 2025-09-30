@@ -1,23 +1,20 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Output,
-  ViewChild,
-} from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Ingredient, Unit } from "../../shared/ingredient.model";
+import { ShoppingListService } from "../shopping-list.service";
 
 @Component({
   selector: "app-shopping-edit",
   templateUrl: "./shopping-edit.component.html",
   styleUrl: "./shopping-edit.component.css", // ok on Angular v17+
 })
-export class ShoppingEditComponent {
-  @ViewChild("nameInput")  nameInputRef!: ElementRef<HTMLInputElement>;
+export class ShoppingEditComponent implements OnInit {
+  @ViewChild("nameInput") nameInputRef!: ElementRef<HTMLInputElement>;
   @ViewChild("amountInput") amountInputRef!: ElementRef<HTMLInputElement>;
-  @ViewChild("unitInput")   unitInputRef!: ElementRef<HTMLSelectElement>;
+  @ViewChild("unitInput") unitInputRef!: ElementRef<HTMLSelectElement>;
 
-  @Output() ingredientAdded = new EventEmitter<Ingredient>();
+  constructor(private slService: ShoppingListService) {}
+
+  ngOnInit(): void {}
 
   onAddItem() {
     const name = this.nameInputRef.nativeElement.value.trim();
@@ -32,11 +29,12 @@ export class ShoppingEditComponent {
     const newIngredient: Ingredient = {
       id: crypto.randomUUID(),
       name,
-      amount: Number.isFinite(amount as number) ? (amount as number) : undefined,
+      amount: Number.isFinite(amount as number)
+        ? (amount as number)
+        : undefined,
       unit,
     };
-
-    this.ingredientAdded.emit(newIngredient);
+    this.slService.addIngredient(newIngredient);
 
     // optional: reset
     this.nameInputRef.nativeElement.value = "";
