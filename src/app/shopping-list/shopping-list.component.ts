@@ -1,5 +1,16 @@
 import { Component, OnInit } from "@angular/core";
-import { Ingredient, IngredientRole, Quantity, RecipeIngredient, Unit } from "../shared/ingredient.model";
+import {
+  Ingredient,
+  IngredientRole,
+  Quantity,
+  RecipeIngredient,
+  Unit,
+  // helpers from ingredient.model.ts:
+  toShoppingIngredient,
+  mergeSameItems,
+  qtyValue as qtyFromIngredient,
+  unitValue as unitFromIngredient,
+} from "../shared/ingredient.model";
 
 @Component({
   selector: "app-shopping-list",
@@ -7,58 +18,68 @@ import { Ingredient, IngredientRole, Quantity, RecipeIngredient, Unit } from "..
   styleUrls: ["./shopping-list.component.css"],
 })
 export class ShoppingListComponent implements OnInit {
-onIngredientAdded(ingredient: Ingredient) {
-  this.ingredients.push(ingredient);
-}
+  constructor() {}
+  ngOnInit(): void {}
 
+  // shopping list holds plain, unified Ingredient objects
+  ingredients: Ingredient[] = [];
 
-ingredients: Ingredient[] = [
+  // child component calls this when a single Ingredient is added via the form
+  onIngredientAdded(ingredient: Ingredient) {
+    this.ingredients = mergeSameItems([...this.ingredients, ingredient]);
+  }
 
-]
-
+  // your recipe with Quantity on each line
   recipeIngredients: RecipeIngredient[] = [
     {
       ingredientId: "ing_bacon",
       name: "Südtiroler Speck",
       quantity: { kind: "exact", value: 100, unit: "g" },
       preparation: "in Würfel geschnitten",
-      section: "Knödel", // optional
+      section: "Knödel",
     },
-    {ingredientId: "ing_bread",
+    {
+      ingredientId: "ing_bread",
       name: "Weissbrot",
       quantity: { kind: "exact", value: 200, unit: "g" },
       preparation: "in Würfel geschnitten",
       section: "Knödel",
     },
-    {ingredientId: "ing_flour",
+    {
+      ingredientId: "ing_flour",
       name: "Mehl",
       quantity: { kind: "exact", value: 40, unit: "g" },
       section: "Knödel",
     },
-    {ingredientId: "ing_onion",
+    {
+      ingredientId: "ing_onion",
       name: "geschmorte Zwiebeln",
       quantity: { kind: "exact", value: 50, unit: "g" },
       section: "Knödel",
     },
-    {ingredientId: "ing_chives",
+    {
+      ingredientId: "ing_chives",
       name: "Schnittlauch",
-      quantity: { kind: "exact", value: 1, unit: "EL" }, // ½ EL
+      quantity: { kind: "exact", value: 1, unit: "EL" }, // ½ EL if you later support fractions
       alternatives: ["Petersilie"],
       preparation: "fein geschnitten",
       section: "Knödel",
     },
-    {ingredientId: "ing_egg",
+    {
+      ingredientId: "ing_egg",
       name: "Eier",
       quantity: { kind: "exact", value: 3, unit: "Stk" },
       section: "Knödel",
     },
-    {ingredientId: "ing_milk",
+    {
+      ingredientId: "ing_milk",
       name: "Milch",
       quantity: { kind: "unspecified" }, // amount not given
       role: "toTaste",
       section: "Knödel",
     },
-    {ingredientId: "ing_salt",
+    {
+      ingredientId: "ing_salt",
       name: "Salz",
       quantity: { kind: "toTaste", unit: "Prise" },
       role: "toTaste",
@@ -66,51 +87,40 @@ ingredients: Ingredient[] = [
     },
   ];
 
-  constructor() {}
-  ngOnInit(): void {}
+  /** Add all recipe ingredients to shopping list (mapped + merged). */
+  addRecipeToShoppingList(): void {
+    const mapped: Ingredient[] = this.recipeIngredients.map(toShoppingIngredient);
+    this.ingredients = mergeSameItems([...this.ingredients, ...mapped]);
+  }
 
+  /** UI helper: format a Quantity for previewing the recipe (not the shopping list). */
   formatQuantity(q: Quantity | undefined, role?: IngredientRole): string {
     if (!q) return "";
-
     switch (q.kind) {
       case "exact":
-        return `${q.value} ${q.unit ?? ""}`.trim();
+        return `${trim0(q.value)} ${q.unit ?? ""}`.trim();
       case "range":
-        return `${q.min}–${q.max} ${q.unit ?? ""}`.trim();
+        return `${trim0(q.min)}–${trim0(q.max)} ${q.unit ?? ""}`.trim();
       case "count":
-        return `${q.value} ${q.unit ?? ""}`.trim();
+        return `${trim0(q.value)} ${q.unit ?? ""}`.trim();
       case "unspecified":
-        return role === "toTaste" ? "" : "";
+        return role === "toTaste" ? "" : "n. B.";
       case "toTaste":
         return "";
     }
   }
 
-  qtyValue(line: RecipeIngredient): string {
-  const q = line.amount;
-  if (!q) return '';
-  switch (q.kind) {
-    case 'exact':  return String(q.value);                    // e.g. 100
-    case 'count':  return String(q.value);                    // e.g. 3
-    case 'range':  return `${q.min}–${q.max}`;                // e.g. 1–2
-    case 'unspecified':
-    case 'toTaste':
-      return 'etwas';                                            // keep column occupied
+  /** Shopping-list display helpers (work with plain Ingredient). */
+  qtyValue(line: Ingredient): string {
+    return qtyFromIngredient(line); // from your model helpers
+  }
+  unitValue(line: Ingredient): string {
+    return unitFromIngredient(line); // from your model helpers
   }
 }
 
-unitValue(line: Ingredient): string {
-  const q = line.unit;
-  if (!q) return '';
-  // show unit only when it makes sense
-  switch (q.kind) {
-    case 'exact':
-    case 'count':
-    case 'range':
-      return q.unit ?? '';
-    case 'unspecified':
-    case 'toTaste':
-      return '';                                             // no unit
-  }
-}
+/** local tiny helper to pretty-print numbers */
+function trim0(n: number): string {
+  const s = (Math.round(n * 100) / 100).toString();
+  return s.replace(/\.00?$/, "");
 }

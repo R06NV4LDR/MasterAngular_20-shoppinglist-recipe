@@ -4,9 +4,18 @@
       (ingredientAdded)="onIngredientAdded($event)"
     ></app-shopping-edit>
     <hr />
+
+    <!-- THIS SHOULD BE IN THE RECIPE-DETAIL OR RECIPE-LIST -->
+    <button
+      class="btn btn-primary my-2"
+      type="button"
+      (click)="addRecipeToShoppingList()"
+    >
+      Add Recipe
+    </button>
+
     <ul class="list-group">
       <a *ngFor="let ingredient of ingredients" class="list-group-item">
-        <!-- was: d-flex align-items-baseline -->
         <div class="d-flex align-items-center" style="gap: 1rem">
           <span class="qty-col">{{ qtyValue(ingredient) || "–" }}</span>
           <span class="unit-col">{{ unitValue(ingredient) }}</span>
