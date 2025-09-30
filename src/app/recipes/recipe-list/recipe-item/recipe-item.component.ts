@@ -13,7 +13,8 @@ export class RecipeItemComponent implements OnInit {
   constructor(private recipeService: RecipeService) {}
 
   ngOnInit(): void {}
-  onSelect() {
+
+  onSelected() {
     this.recipeService.recipeSelected.emit(this.recipe);
   }
 }
