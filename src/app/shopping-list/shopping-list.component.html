@@ -5,7 +5,7 @@
     ></app-shopping-edit>
     <hr />
     <ul class="list-group">
-      <a *ngFor="let ingredient of recipeIngredients" class="list-group-item">
+      <a *ngFor="let ingredient of ingredients" class="list-group-item">
         <!-- was: d-flex align-items-baseline -->
         <div class="d-flex align-items-center" style="gap: 1rem">
           <span class="qty-col">{{ qtyValue(ingredient) || "–" }}</span>

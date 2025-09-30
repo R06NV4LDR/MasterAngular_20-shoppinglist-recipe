@@ -12,7 +12,7 @@ import { Ingredient, Unit } from "../../shared/ingredient.model";
 @Component({
   selector: "app-shopping-edit",
   templateUrl: "./shopping-edit.component.html",
-  styleUrls: ["./shopping-edit.component.css"],
+  styleUrl: "./shopping-edit.component.css",
 })
 export class ShoppingEditComponent implements OnInit {
   @ViewChild("nameInput") nameInputRef: ElementRef;

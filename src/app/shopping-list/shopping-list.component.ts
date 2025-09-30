@@ -87,7 +87,7 @@ ingredients: Ingredient[] = [
   }
 
   qtyValue(line: RecipeIngredient): string {
-  const q = line.quantity;
+  const q = line.amount;
   if (!q) return '';
   switch (q.kind) {
     case 'exact':  return String(q.value);                    // e.g. 100
@@ -99,8 +99,8 @@ ingredients: Ingredient[] = [
   }
 }
 
-unitValue(line: RecipeIngredient): string {
-  const q = line.quantity;
+unitValue(line: Ingredient): string {
+  const q = line.unit;
   if (!q) return '';
   // show unit only when it makes sense
   switch (q.kind) {
