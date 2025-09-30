@@ -7,6 +7,10 @@ import { Ingredient, IngredientRole, Quantity, RecipeIngredient, Unit } from "..
   styleUrls: ["./shopping-list.component.css"],
 })
 export class ShoppingListComponent implements OnInit {
+onIngredientAdded(ingredient: Ingredient) {
+  this.ingredients.push(ingredient);
+}
+
 
 ingredients: Ingredient[] = [
 

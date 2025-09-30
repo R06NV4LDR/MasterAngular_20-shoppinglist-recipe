@@ -1,16 +1,24 @@
-<ul class="list-group">
-  <a *ngFor="let ingredient of recipeIngredients" class="list-group-item">
-    <!-- was: d-flex align-items-baseline -->
-    <div class="d-flex align-items-center" style="gap: 1rem;">
-      <span class="qty-col">{{ qtyValue(ingredient) || '–' }}</span>
-      <span class="unit-col">{{ unitValue(ingredient) }}</span>
-      <span class="name-col">
-        {{ ingredient.name }}
-        <ng-container *ngIf="ingredient.alternatives?.length">
-          &nbsp;oder {{ ingredient.alternatives.join(' / ') }}
-        </ng-container>
-      </span>
-      <span class="prep-col text-muted">{{ ingredient.preparation }}</span>
-    </div>
-  </a>
-</ul>
+<div class="row">
+  <div class="col-xs-10">
+    <app-shopping-edit
+      (ingredientAdded)="onIngredientAdded($event)"
+    ></app-shopping-edit>
+    <hr />
+    <ul class="list-group">
+      <a *ngFor="let ingredient of recipeIngredients" class="list-group-item">
+        <!-- was: d-flex align-items-baseline -->
+        <div class="d-flex align-items-center" style="gap: 1rem">
+          <span class="qty-col">{{ qtyValue(ingredient) || "–" }}</span>
+          <span class="unit-col">{{ unitValue(ingredient) }}</span>
+          <span class="name-col">
+            {{ ingredient.name }}
+            <ng-container *ngIf="ingredient.alternatives?.length">
+              &nbsp;oder {{ ingredient.alternatives.join(" / ") }}
+            </ng-container>
+          </span>
+          <span class="prep-col text-muted">{{ ingredient.preparation }}</span>
+        </div>
+      </a>
+    </ul>
+  </div>
+</div>

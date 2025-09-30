@@ -3,20 +3,41 @@
     <form action="">
       <div class="row">
         <div class="col-sm-5 form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" class="form-control" />
+          <label for="name">Name</label>
+          <input 
+          type="text" 
+          id="name" 
+          class="form-control" 
+          #nameInput 
+          />
         </div>
         <div class="col-sm-2 form-group">
-            <label for="amount">Amount</label>
-            <input type="number" id="amount" class="form-control" />
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" class="form-control" #amountInput />
         </div>
+        <div class="col-sm-2 form-group">
+          <label for="unit">Unit</label>
+          <select id="unit" class="form-control" #unitInput>
+            <option value="" selected>Please select a Unit</option>
+            <option value="g">g</option>
+            <option value="kg">kg</option>
+            <option value="ml">ml</option>
+            <option value="l">l</option>
+            <option value="pcs">pcs</option>
+          </select>
+        </div>
+        <!-- <div class="col-sm-2 form-group">
+          <label for="unit">Unit</label>
+          <input type="text" id="unit" class="form-control" #unitInput />
+        </div> -->
       </div>
       <div class="row">
         <div class="col-xs-12">
-            <button class="btn btn-success">Add</button>
-            <button class="btn btn-danger">Delete</button>
-            <button class="btn btn-primary">Clear</button>
+          <button class="btn btn-success" type="submit" (click)="onAddItem(); $event.preventDefault()">Add</button>
+          <button class="btn btn-danger" type="button">Delete</button>
+          <button class="btn btn-primary" type="button">Clear</button>
         </div>
+        <hr />
       </div>
     </form>
   </div>

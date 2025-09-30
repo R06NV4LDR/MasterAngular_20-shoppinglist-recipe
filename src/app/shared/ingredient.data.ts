@@ -1,6 +1,6 @@
 import { Ingredient } from "./ingredient.model";
 
-export interface Ingredient {
+export interface IngredientData {
   id: string;
   name: { de: string; en: string };
   category?: { de: string; en: string };

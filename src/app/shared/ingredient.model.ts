@@ -34,6 +34,8 @@ export interface Ingredient {
   name: string; // "Schnittlauch", "Mehl", "Eier"
   category?: string; // "Herbs", "Vegetables"
   nutritionPer100g?: NutritionFacts;
+  amount?: number;
+  unit?: Unit;
   // optional: density g/ml, defaultUnit, brand/product links, etc.
   //   density?: number;
   //   defaultUnit?: string;
