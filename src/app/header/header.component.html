@@ -1,18 +1,14 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand" (click)="onSelect('recipe')"
-        >Recipe Book & Shopping List</a
-      >
+      <a href="#" class="navbar-brand">Recipe Book & Shopping List</a>
     </div>
 
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="#" (click)="onSelect('recipe')">Recipes</a></li>
-        <li>
-          <a href="#" (click)="onSelect('shopping-list')"
-            >Shopping List ({{ count }})</a
-          >
+        <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
+        <li routerLinkActive="active">
+          <a routerLink="/shopping-list">Shopping List ({{ count }})</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

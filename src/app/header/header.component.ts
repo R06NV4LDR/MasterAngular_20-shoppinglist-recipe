@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
 
@@ -14,8 +8,6 @@ import { ShoppingListService } from "../shopping-list/shopping-list.service";
   styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  @Output() featureSelected = new EventEmitter<string>();
-
   count = 0;
   private ingSub?: Subscription;
 
@@ -31,9 +23,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.ingSub?.unsubscribe();
-  }
-
-  onSelect(feature: string) {
-    this.featureSelected.emit(feature);
   }
 }
