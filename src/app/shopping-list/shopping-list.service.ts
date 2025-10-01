@@ -1,22 +1,33 @@
 import { Subject } from "rxjs";
 
-import { Ingredient } from "../shared/ingredient.model";
+import { Ingredient, Unit } from "../shared/ingredient.model";
 
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
-
   private ingredients: Ingredient[] = [];
 
   getIngredients() {
     return this.ingredients.slice();
   }
 
-
   // Add a single ingredient and check if this ingredient is already in the shopping list.
-  // if yes they will get merged into one (amount is added) 
-  addIngredient(ingredient: Ingredient) {
+  // if yes they will get merged into one (amount is added)
+  addIngredient(
+    ingredient: Ingredient,
+    amount?: number | null,
+    unit?: Unit | null
+  ) {
     const nameKey = this.normalize(ingredient.name);
-    const unitKey = ingredient.unit ?? "";
+
+    const parsedAmount =
+      typeof amount === "number" && Number.isFinite(amount)
+        ? amount
+        : typeof ingredient.amount === "number" &&
+          Number.isFinite(ingredient.amount)
+        ? ingredient.amount
+        : undefined;
+
+    const unitKey = (unit ?? ingredient.unit ?? "") as string;
 
     const idx = this.ingredients.findIndex(
       (i) => this.normalize(i.name) === nameKey && (i.unit ?? "") === unitKey
@@ -39,7 +50,7 @@ export class ShoppingListService {
   }
 
   addIngredients(ingredients: Ingredient[]) {
-    for (const it of ingredients) this.addIngredient(it);
+    for (const it of ingredients) this.addIngredient(it, it.amount, it.unit);
 
     //   for (let ingredient of ingredients) {
     //     this.addIngredient(ingredient);
