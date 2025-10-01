@@ -11,6 +11,10 @@ export class ShoppingListService {
     return this.ingredients.slice();
   }
 
+  getIngredient(index: number) {
+    return this.ingredients[index];
+  }
+
   // Add a single ingredient and check if this ingredient is already in the shopping list.
   // if yes they will get merged into one (amount is added)
   addIngredient(
