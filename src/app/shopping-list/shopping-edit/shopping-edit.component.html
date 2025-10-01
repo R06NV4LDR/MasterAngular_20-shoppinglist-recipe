@@ -51,14 +51,14 @@
         class="btn btn-success"
         type="submit"
         [disabled]="!shoppingForm.valid"
-      >{{ editMode ? 'Update' : 'Add' }}
-        
+      >
+        {{ editMode ? "Update" : "Add" }}
       </button>
       <button class="btn btn-danger" type="button">Delete</button>
       <button
         class="btn btn-primary"
         type="button"
-        (click)="onClear(shoppingForm)"
+        (click)="onClear()"
       >
         Clear
       </button>
