@@ -27,8 +27,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         this.slForm.setValue({
           name: this.editedItem.name,
           amount: this.editedItem.amount,
-          unit: this.editedItem.unit
-        })
+          unit: this.editedItem.unit,
+        });
       }
     );
   }
@@ -71,5 +71,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onClear() {
     this.slForm.reset();
     this.editMode = false;
+  }
+
+  onDelete() {
+    this.slService.deleteIngredient(this.editedItemIndex)
+    this.onClear();
+    throw new Error("Method not implemented.");
   }
 }
