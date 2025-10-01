@@ -41,7 +41,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   recipeIngredients: RecipeIngredient[] = [
-    // ...your data unchanged
+
   ];
 
   addRecipeToShoppingList(): void {

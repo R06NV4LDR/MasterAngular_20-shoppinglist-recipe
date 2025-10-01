@@ -1,4 +1,4 @@
-<form #shoppingForm="ngForm" (ngSubmit)="onAddItem(shoppingForm)">
+<form #shoppingForm="ngForm" (ngSubmit)="onSubmit(shoppingForm)">
   <div class="row">
     <div class="col-sm-5 form-group">
       <label for="name">Name</label>
@@ -20,7 +20,6 @@
         name="amount"
         ngModel
         min="0"
-        required
       />
       <!-- Instead of min="0" -->
       <!-- pattern="^[1-9]+[0-9]*$" -->
