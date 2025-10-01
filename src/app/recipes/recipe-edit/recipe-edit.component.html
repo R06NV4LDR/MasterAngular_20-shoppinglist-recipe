@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12">
-    <form>
+    <form [formGroup]="recipeForm">
       <div class="row">
         <div class="col-xs-12">
           <button type="submit" class="btn btn-success">Save</button>
@@ -11,7 +11,12 @@
         <div class="col-xs-12">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" id="name" class="form-control" />
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-control"
+            />
           </div>
         </div>
       </div>
@@ -20,7 +25,12 @@
         <div class="col-xs-12">
           <div class="form-group">
             <label for="imagePath">Image URL</label>
-            <input type="text" id="name" class="form-control" />
+            <input
+              type="text"
+              id="name"
+              formControlName="imagePath"
+              class="form-control"
+            />
           </div>
         </div>
       </div>
@@ -38,6 +48,7 @@
             <textarea
               type="text"
               id="description"
+                formControlName="description"
               class="form-control"
               rows="6"
             ></textarea>
@@ -57,8 +68,7 @@
             <div class="col-xs-2">
               <button class="btn btn-danger">X</button>
             </div>
-          
-        </div>
+          </div>
         </div>
       </div>
     </form>

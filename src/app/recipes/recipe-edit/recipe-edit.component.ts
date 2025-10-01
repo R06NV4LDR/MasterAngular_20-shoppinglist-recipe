@@ -13,7 +13,10 @@ export class RecipeEditComponent implements OnInit {
   editMode = false;
   recipeForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private recipeService: RecipeService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private recipeService: RecipeService
+  ) {}
 
   // Need to clean up the subscription when working with own Observables (S30:502)
   ngOnInit(): void {
@@ -24,12 +27,17 @@ export class RecipeEditComponent implements OnInit {
     });
   }
 
+  onSubmit() {
+    console.log(this.recipeForm);
+    
+  }
+
   private initForm() {
     let recipeName = "";
     let recipeImagePath = "";
     let recipeDescription = "";
     // Ingrdeients
-    
+
     if (this.editMode) {
       const recipe = this.recipeService.getRecipe(this.id);
       recipeName = recipe.name;
@@ -37,9 +45,9 @@ export class RecipeEditComponent implements OnInit {
       recipeDescription = recipe.description;
     }
     this.recipeForm = new FormGroup({
-      'name': new FormControl(recipeName),
-      'imagePath': new FormControl(recipeImagePath),
-      'description': new FormControl(recipeDescription),
+      name: new FormControl(recipeName),
+      imagePath: new FormControl(recipeImagePath),
+      description: new FormControl(recipeDescription),
     });
   }
 }
