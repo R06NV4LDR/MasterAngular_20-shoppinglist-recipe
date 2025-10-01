@@ -1,8 +1,9 @@
-import { EventEmitter } from "@angular/core";
+import { Subject } from "rxjs";
+
 import { Ingredient } from "../shared/ingredient.model";
 
 export class ShoppingListService {
-  ingredientsChanged = new EventEmitter<Ingredient[]>();
+  ingredientsChanged = new Subject<Ingredient[]>();
 
   private ingredients: Ingredient[] = [];
 
@@ -10,6 +11,9 @@ export class ShoppingListService {
     return this.ingredients.slice();
   }
 
+
+  // Add a single ingredient and check if this ingredient is already in the shopping list.
+  // if yes they will get merged into one (amount is added) 
   addIngredient(ingredient: Ingredient) {
     const nameKey = this.normalize(ingredient.name);
     const unitKey = ingredient.unit ?? "";
@@ -31,7 +35,7 @@ export class ShoppingListService {
       this.ingredients.push({ ...ingredient });
     }
 
-    this.ingredientsChanged.emit(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   addIngredients(ingredients: Ingredient[]) {
