@@ -1,7 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Ingredient, Unit } from "../../shared/ingredient.model";
 import { ShoppingListService } from "../shopping-list.service";
-import { NgForm } from "@angular/forms";
 
 @Component({
   selector: "app-shopping-edit",
@@ -9,20 +8,23 @@ import { NgForm } from "@angular/forms";
   styleUrl: "./shopping-edit.component.css", // ok on Angular v17+
 })
 export class ShoppingEditComponent implements OnInit {
-  
+  @ViewChild("nameInput") nameInputRef!: ElementRef<HTMLInputElement>;
+  @ViewChild("amountInput") amountInputRef!: ElementRef<HTMLInputElement>;
+  @ViewChild("unitInput") unitInputRef!: ElementRef<HTMLSelectElement>;
+
   constructor(private slService: ShoppingListService) {}
 
   ngOnInit(): void {}
 
-  onAddItem(form: NgForm) {
-    const value = form.value;
+  onAddItem() {
+    const name = this.nameInputRef.nativeElement.value.trim();
+    const amountRaw = this.amountInputRef.nativeElement.value;
+    const unitRaw = this.unitInputRef.nativeElement.value;
 
+    if (!name) return;
 
-
-    // if (!name) return;
-
-    // const amount = amountRaw === "" ? undefined : Number(amountRaw);
-    // const unit = (unitRaw || undefined) as Unit | undefined;
+    const amount = amountRaw === "" ? undefined : Number(amountRaw);
+    const unit = (unitRaw || undefined) as Unit | undefined;
 
     const newIngredient: Ingredient = {
       id: crypto.randomUUID(),
@@ -32,7 +34,7 @@ export class ShoppingEditComponent implements OnInit {
         : undefined,
       unit,
     };
-    this.slService.addIngredient(value.name, value.amount, value.unit);
+    this.slService.addIngredient(newIngredient);
 
     // optional: reset
     this.nameInputRef.nativeElement.value = "";
