@@ -12,6 +12,8 @@ export class RecipeEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) {}
 
+
+  // Need to clean up the subscription when working with own Observables (S30:502)
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.id = +params["id"];
