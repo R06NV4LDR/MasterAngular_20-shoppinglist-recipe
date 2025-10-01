@@ -10,7 +10,10 @@
           <a routerLink="/recipes">Recipes</a>
         </li>
         <li routerLinkActive="active">
-          <a routerLink="/shopping-list">Shopping List ({{ count }})</a>
+          <a routerLink="/shopping-list" class="d-flex align-items-center"
+            >Shopping List
+            <span class="badge badge-primary badge-pill">{{ count }}</span></a
+          >
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

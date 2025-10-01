@@ -1,0 +1,6 @@
+.navbar .badge {
+  position: relative;
+  top: -1px;              /* tweak until it lines up */
+  vertical-align: baseline;
+  margin-left: 4px;
+}
