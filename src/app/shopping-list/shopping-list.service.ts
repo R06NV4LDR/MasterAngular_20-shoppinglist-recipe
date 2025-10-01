@@ -65,6 +65,11 @@ export class ShoppingListService {
     // this.ingredientsChanged.emit(this.ingredients.slice());
   }
 
+  updateIngredient(index: number, newIngredient: Ingredient) {
+    this.ingredients[index] = newIngredient;
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
   // ───────── helpers ─────────
   private normalize(s: string): string {
     return s.trim().toLowerCase();
