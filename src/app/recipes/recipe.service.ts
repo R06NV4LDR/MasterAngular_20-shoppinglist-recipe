@@ -152,9 +152,7 @@ export class RecipeService {
     ),
   ];
 
-  constructor(private slService: ShoppingListService) {
-
-  }
+  constructor(private slService: ShoppingListService) {}
 
   getRecipes() {
     return this.recipes.slice();
@@ -162,5 +160,9 @@ export class RecipeService {
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.slService.addIngredients(ingredients);
+  }
+
+  getRecipe(index: number) {
+    return this.recipes.slice()[index];
   }
 }
