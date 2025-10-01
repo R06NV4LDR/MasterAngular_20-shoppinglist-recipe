@@ -1,17 +1,36 @@
-<form (ngSubmit)="onAddItem()">
+<form #shoppingForm="ngForm" (ngSubmit)="onAddItem(shoppingForm)">
   <div class="row">
     <div class="col-sm-5 form-group">
       <label for="name">Name</label>
-      <input type="text" id="name" class="form-control" #nameInput />
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        name="name"
+        ngModel
+        required
+      />
     </div>
     <div class="col-sm-2 form-group">
       <label for="amount">Amount</label>
-      <input type="number" id="amount" class="form-control" #amountInput />
+      <input
+        type="number"
+        id="amount"
+        class="form-control"
+        name="amount"
+        ngModel
+        min="0"
+      />
     </div>
     <div class="col-sm-3 form-group">
       <label for="unit">Unit</label>
-      <select id="unit" class="form-control" #unitInput>
-        <option value="" selected>Bitte Einheit wählen</option>
+      <select
+        id="unit"
+        class="form-control"
+        name="unit"
+        ngModel
+      >
+        <option value="" selected>Bitte Einheit waehlen</option>
         <!-- Match your Unit union exactly -->
         <option value="g">g</option>
         <option value="kg">kg</option>
@@ -33,7 +52,13 @@
     <div class="col-xs-12">
       <button class="btn btn-success" type="submit">Add</button>
       <button class="btn btn-danger" type="button">Delete</button>
-      <button class="btn btn-primary" type="button">Clear</button>
+      <button
+        class="btn btn-primary"
+        type="button"
+        (click)="onClear(shoppingForm)"
+      >
+        Clear
+      </button>
     </div>
   </div>
 </form>

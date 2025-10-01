@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
+import { NgForm } from "@angular/forms";
 import { Ingredient, Unit } from "../../shared/ingredient.model";
 import { ShoppingListService } from "../shopping-list.service";
 
@@ -7,38 +8,36 @@ import { ShoppingListService } from "../shopping-list.service";
   templateUrl: "./shopping-edit.component.html",
   styleUrl: "./shopping-edit.component.css", // ok on Angular v17+
 })
-export class ShoppingEditComponent implements OnInit {
-  @ViewChild("nameInput") nameInputRef!: ElementRef<HTMLInputElement>;
-  @ViewChild("amountInput") amountInputRef!: ElementRef<HTMLInputElement>;
-  @ViewChild("unitInput") unitInputRef!: ElementRef<HTMLSelectElement>;
-
+export class ShoppingEditComponent {
   constructor(private slService: ShoppingListService) {}
 
-  ngOnInit(): void {}
+  onAddItem(form: NgForm) {
+    const { name, amount: amountInput, unit: unitInput } = form.value;
+    const trimmedName = (name ?? "").trim();
+    if (!trimmedName) return;
 
-  onAddItem() {
-    const name = this.nameInputRef.nativeElement.value.trim();
-    const amountRaw = this.amountInputRef.nativeElement.value;
-    const unitRaw = this.unitInputRef.nativeElement.value;
-
-    if (!name) return;
-
-    const amount = amountRaw === "" ? undefined : Number(amountRaw);
-    const unit = (unitRaw || undefined) as Unit | undefined;
+    const parsedAmount =
+      amountInput === "" || amountInput === undefined || amountInput === null
+        ? undefined
+        : Number(amountInput);
+    const amount =
+      typeof parsedAmount === "number" && Number.isFinite(parsedAmount)
+        ? parsedAmount
+        : undefined;
+    const unit = (unitInput || undefined) as Unit | undefined;
 
     const newIngredient: Ingredient = {
       id: crypto.randomUUID(),
-      name,
-      amount: Number.isFinite(amount as number)
-        ? (amount as number)
-        : undefined,
+      name: trimmedName,
+      amount,
       unit,
     };
-    this.slService.addIngredient(newIngredient);
 
-    // optional: reset
-    this.nameInputRef.nativeElement.value = "";
-    this.amountInputRef.nativeElement.value = "";
-    this.unitInputRef.nativeElement.value = "";
+    this.slService.addIngredient(newIngredient);
+    form.resetForm({ unit: "" });
+  }
+
+  onClear(form: NgForm) {
+    form.resetForm({ unit: "" });
   }
 }
