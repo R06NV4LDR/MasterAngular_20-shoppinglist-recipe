@@ -36,9 +36,9 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  // onIngredientAdded(ingredient: Ingredient) {
-  //   this.ingredients = mergeSameItems([...this.ingredients, ingredient]);
-  // }
+  onEditItem(index: number) {
+    this.slService.startedEditing.next(index);
+  }
 
   recipeIngredients: RecipeIngredient[] = [
     // ...your data unchanged
