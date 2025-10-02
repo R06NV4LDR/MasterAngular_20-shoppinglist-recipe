@@ -58,9 +58,9 @@ export class RecipeEditComponent implements OnInit {
     );
   }
 
-  // onDelete() {
-  //  this.recipeService.deleteRecipe(this.recipe)
-  // }
+  onDeleteIngredient(index: number) {
+    (<FormArray>this.recipeForm.get("ingredients")).removeAt(index);
+  }
 
   onCancel() {
     this.router.navigate(["../"], { relativeTo: this.route });
